@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/14035/Desktop/Java Stuff/android/ECalvingTracker2/app/src/main/res/layout/activity_main.xml" value="0.3223958333333333" />
+        <entry key="..\:/Users/14035/Desktop/Java Stuff/android/ECalvingTracker2/app/src/main/res/layout/indiv_calf.xml" value="0.5" />
+        <entry key="..\:/Users/14035/Desktop/Java Stuff/android/ECalvingTracker2/app/src/main/res/layout/main_fragment.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/14035/Desktop/Java Stuff/android/ECalvingTracker2/app/src/main/res/layout/new_calf.xml" value="0.16666666666666666" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

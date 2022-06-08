@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 class CalfViewModel(private val calfDAO: CalfDAO): ViewModel() {
 
-    suspend fun allCalves(): Flow<List<Calf>> = calfDAO.getAllCalves()
+    suspend fun allCalves(): List<Calf> = calfDAO.getAllCalves()
 
     suspend fun getCalfByTagNumber(tagNumber: String): Calf = calfDAO.getByTagNumber(tagNumber)
 }

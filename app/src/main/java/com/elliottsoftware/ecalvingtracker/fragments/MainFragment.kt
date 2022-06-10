@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elliottsoftware.ecalvingtracker.R
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
 
-    private val binding get() = _binding!!
+    private val binding get() = _binding!! //THIS IS A GETTER
 
     private lateinit var recyclerView: RecyclerView
 
@@ -39,6 +40,8 @@ class MainFragment : Fragment() {
     ): View? {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
+
+
         return view
     }
 
@@ -53,6 +56,10 @@ class MainFragment : Fragment() {
            calfAdapters.submitList(viewModel.allCalves())
        }
 
+        //SETTING THE F.A.B NAVIGATION
+        binding.fabAddCalf.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_newCalf)
+        }
 
     }
 

@@ -8,7 +8,7 @@ class CalfViewModelFactory(
     private val calfDAO: CalfDAO
 ) : ViewModelProvider.Factory {
     // TODO: explain what is going on with this weird syntax
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(CalfViewModel::class.java)){
             return CalfViewModel(calfDAO) as T
         }

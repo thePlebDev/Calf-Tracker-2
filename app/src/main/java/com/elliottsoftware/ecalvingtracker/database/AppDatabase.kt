@@ -19,7 +19,7 @@ abstract class AppDatabase: RoomDatabase() {
                     context,
                     AppDatabase::class.java,
                     "app_database")
-                    .createFromAsset("database/calf_database.db")
+                    .createFromAsset("database.db")
                     .build()
                 INSTANCE = instance
 
@@ -27,4 +27,5 @@ abstract class AppDatabase: RoomDatabase() {
             }
         }
     }
+
 }

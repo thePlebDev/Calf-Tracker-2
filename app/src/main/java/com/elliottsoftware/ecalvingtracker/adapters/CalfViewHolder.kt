@@ -9,7 +9,12 @@ import com.elliottsoftware.ecalvingtracker.models.Calf
 class CalfViewHolder(private var binding: IndivCalfBinding): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(calf:Calf){
-        binding.textViewTitle.text = calf.tagNumber
+
+        binding.apply {
+            textViewTitle.text = calf.tagNumber
+            textViewDescription.text = calf.details
+            textViewDate.text = calf.date.toString()
+        }
     }
 
 

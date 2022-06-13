@@ -19,13 +19,12 @@ data class Calf(
     val cciaNumber:String,
     @ColumnInfo(name="date_born")
     val date:Date,
+    @ColumnInfo(name="sex")
+    val sex:String,
     @PrimaryKey(autoGenerate = true)
     val id: Long =0
-//    @ColumnInfo(name="date_born")
-//    val dateBorn: Long = System.currentTimeMillis()
 ){
-//    val createdDateFormatted: String
-//        get() = DateFormat.getDateInstance().format(dateBorn)
+
 
 
 

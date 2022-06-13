@@ -9,7 +9,7 @@ import com.elliottsoftware.ecalvingtracker.dao.CalfDAO
 import com.elliottsoftware.ecalvingtracker.models.Calf
 import com.elliottsoftware.ecalvingtracker.util.DateConverter
 
-@Database(entities = [Calf::class], version = 1)
+@Database(entities = [Calf::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 

@@ -18,6 +18,7 @@ import com.elliottsoftware.ecalvingtracker.viewModels.CalfViewModel
 import com.elliottsoftware.ecalvingtracker.viewModels.CalfViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
 
@@ -45,6 +46,7 @@ class MainFragment : Fragment() {
         return view
     }
 
+    @OptIn(InternalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
@@ -52,9 +54,11 @@ class MainFragment : Fragment() {
         val calfAdapters = CalfAdapter({})
 
         recyclerView.adapter = calfAdapters
+
        GlobalScope.launch(Dispatchers.IO){
            calfAdapters.submitList(viewModel.allCalves())
        }
+
 
         //SETTING THE F.A.B NAVIGATION
         binding.fabAddCalf.setOnClickListener{

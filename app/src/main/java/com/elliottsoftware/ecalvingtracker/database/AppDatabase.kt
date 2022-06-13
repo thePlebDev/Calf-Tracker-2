@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.elliottsoftware.ecalvingtracker.dao.CalfDAO
 import com.elliottsoftware.ecalvingtracker.models.Calf
+import com.elliottsoftware.ecalvingtracker.util.DateConverter
 
 @Database(entities = [Calf::class], version = 1)
+@TypeConverters(DateConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun calfDao():CalfDAO companion object{
@@ -19,7 +22,6 @@ abstract class AppDatabase: RoomDatabase() {
                     context,
                     AppDatabase::class.java,
                     "app_database")
-                    .createFromAsset("database.db")
                     .build()
                 INSTANCE = instance
 

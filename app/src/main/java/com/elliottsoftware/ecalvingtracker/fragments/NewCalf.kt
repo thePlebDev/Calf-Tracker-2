@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -44,9 +45,12 @@ class NewCalf : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+
+
         val tagNumber:EditText = binding.editTextTitle
         val details:EditText = binding.editTextDescription
         val cciaNumber:EditText = binding.editTextCciaNumber
+
         
         binding.newCalfFabLeft.setOnClickListener{
             Navigation.findNavController(view).navigate(R.id.action_newCalf_to_mainFragment)
@@ -62,11 +66,12 @@ class NewCalf : Fragment() {
                 tagNumber.error = "Must enter tag number"
 
             }else{
+                val sex = buttonIsChecked(binding.radioBull)
                 Snackbar.make(binding.newCalfFabRight,"Calf " + tagNumber.text + " saved",Snackbar.LENGTH_LONG)
                     .show()
-                GlobalScope.launch(Dispatchers.IO){
-                    viewModel.saveCalf(tagNumber.text.toString(),details.text.toString(),cciaNumber.text.toString())
-                }
+
+                    viewModel.saveCalf(tagNumber.text.toString(),details.text.toString(),cciaNumber.text.toString(),sex)
+
                 //NAVIGATING BACK TO HOME PAGE
 
                     Navigation.findNavController(view).navigate(R.id.action_newCalf_to_mainFragment)
@@ -77,25 +82,36 @@ class NewCalf : Fragment() {
 
 
     }
-
-    private fun addTextWatcher(tagNumber : EditText):Unit{
-
-        tagNumber.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                TODO("Not yet implemented")
-            }
-
-        })
-
+    private fun buttonIsChecked(radioButton: RadioButton):String{
+        return if(radioButton.isChecked){
+            "Bull"
+        }else{
+            "Heifer"
+        }
     }
+
+//    fun onRadioButtonClicked(view:View):String{
+//        if(view is RadioButton){
+//            //Is the button now checked?
+//            val checked = view.isChecked
+//
+//            //check which radio button was clicked
+//            when(view.getId()){
+//                R.id.radio_bull ->
+//                    if(checked){
+//                        //do stuff for bull
+//                        return binding.radioBull.text.toString()
+//                    }
+//                R.id.radio_heifer ->{
+//                    if(checked){
+//                        //do stuff for heifer
+//                        return binding.radioHeifer.text.toString()
+//                    }
+//                }
+//            }
+//        }
+//        return "Bull"
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

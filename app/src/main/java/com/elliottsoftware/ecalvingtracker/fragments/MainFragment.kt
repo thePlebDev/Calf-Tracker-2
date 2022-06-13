@@ -49,6 +49,7 @@ class MainFragment : Fragment() {
     @OptIn(InternalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //SETTING UP THE RECYCLER VIEW
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val calfAdapters = CalfAdapter({})

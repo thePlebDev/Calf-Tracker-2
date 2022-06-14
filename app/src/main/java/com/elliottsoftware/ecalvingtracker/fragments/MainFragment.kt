@@ -21,6 +21,7 @@ import com.elliottsoftware.ecalvingtracker.viewModels.CalfViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -82,9 +83,14 @@ class MainFragment : Fragment() {
 
 
 
-       GlobalScope.launch(Dispatchers.IO){
-           calfAdapters.submitList(viewModel.allCalves())
-       }
+//       GlobalScope.launch(Dispatchers.IO){
+//           calfAdapters.submitList(viewModel.allCalves())
+//       }
+        lifecycle.coroutineScope.launch{
+            viewModel.allCalves().collect {
+                calfAdapters.submitList(it)
+            }
+        }
 
 
         //SETTING THE F.A.B NAVIGATION

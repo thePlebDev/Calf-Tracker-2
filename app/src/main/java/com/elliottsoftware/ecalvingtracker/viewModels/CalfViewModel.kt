@@ -10,7 +10,7 @@ import java.util.*
 
 class CalfViewModel(private val calfDAO: CalfDAO): ViewModel() {
 
-    suspend fun allCalves(): List<Calf> {
+    suspend fun allCalves(): Flow<List<Calf>> {
 
         return calfDAO.getAllCalves()
     }

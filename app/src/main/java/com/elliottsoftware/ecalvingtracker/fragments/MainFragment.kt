@@ -16,6 +16,7 @@ import com.elliottsoftware.ecalvingtracker.R
 import com.elliottsoftware.ecalvingtracker.adapters.CalfAdapter
 import com.elliottsoftware.ecalvingtracker.database.CalfDatabaseApplication
 import com.elliottsoftware.ecalvingtracker.databinding.MainFragmentBinding
+import com.elliottsoftware.ecalvingtracker.util.RecyclerViewSwipeCallback
 import com.elliottsoftware.ecalvingtracker.viewModels.CalfViewModel
 import com.elliottsoftware.ecalvingtracker.viewModels.CalfViewModelFactory
 import kotlinx.coroutines.Dispatchers
@@ -25,10 +26,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class MainFragment : Fragment() {
-    private var _binding: MainFragmentBinding? = null
+class MainFragment : ViewBindingFragment() {
 
-    private val binding get() = _binding!! //THIS IS A GETTER
+
 
     private lateinit var recyclerView: RecyclerView
 
@@ -37,19 +37,9 @@ class MainFragment : Fragment() {
             (activity?.application as CalfDatabaseApplication).database.calfDao() //providing dao for the primary constructor
         )
     }
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = MainFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
 
 
-        return view
-    }
 
-    @OptIn(InternalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //SETTING UP THE RECYCLER VIEW
@@ -62,30 +52,16 @@ class MainFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = calfAdapters
             }
-          ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,
-              ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT ){
-              override fun onMove(
-                  recyclerView: RecyclerView,
-                  viewHolder: RecyclerView.ViewHolder,
-                  target: RecyclerView.ViewHolder
-              ): Boolean {
-                  return false
-              }
 
-              override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                  
-                  val calf = calfAdapters.currentList[viewHolder.adapterPosition]
-                  viewModel.deleteCalfOnSwipe(calf)
-              }
+            setUpItemTouchHelper(viewModel,calfAdapters)
+                .attachToRecyclerView(recyclerView)
 
-          }).attachToRecyclerView(recyclerView)
+
+
         }
 
 
 
-//       GlobalScope.launch(Dispatchers.IO){
-//           calfAdapters.submitList(viewModel.allCalves())
-//       }
         lifecycle.coroutineScope.launch{
             viewModel.allCalves().collect {
                 calfAdapters.submitList(it)
@@ -100,9 +76,14 @@ class MainFragment : Fragment() {
 
     }
 
-    //used to remove the reference to the view so it can be garbage collected
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setUpItemTouchHelper(viewModel: CalfViewModel,calfAdapters: CalfAdapter): ItemTouchHelper{
+        return ItemTouchHelper(RecyclerViewSwipeCallback(0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+            viewModel,
+            calfAdapters
+        ))
+
     }
+    
+
 }

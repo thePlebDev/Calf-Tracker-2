@@ -2,10 +2,16 @@ package com.elliottsoftware.ecalvingtracker.util
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.elliottsoftware.ecalvingtracker.adapters.CalfAdapter
+import com.elliottsoftware.ecalvingtracker.viewModels.CalfViewModel
 
-class RecyclerViewSwipeCallback(dragDirs: Int,
-                                swipeDirs: Int
+open class RecyclerViewSwipeCallback(
+    private val dragDirs: Int,
+    private val swipeDirs: Int,
+    val viewModel: CalfViewModel,
+    val calfAdapter: CalfAdapter
 ) : ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
+
     /**
      * triggered on drag and drop
      * we do not care about drag and drop*/
@@ -18,6 +24,8 @@ class RecyclerViewSwipeCallback(dragDirs: Int,
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        TODO("Not yet implemented")
+        val calf = calfAdapter.currentList[viewHolder.adapterPosition]
+        viewModel.deleteCalfOnSwipe(calf)
+
     }
 }

@@ -1,6 +1,7 @@
 package com.elliottsoftware.ecalvingtracker.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elliottsoftware.ecalvingtracker.R
@@ -50,11 +52,35 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //SETTING UP THE RECYCLER VIEW
-        recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val calfAdapters = CalfAdapter({})
+        val calfAdapters = CalfAdapter {
+            //This lambda will be called when the recyclerView items are clicked
 
-        recyclerView.adapter = calfAdapters
+        }
+        binding.apply {
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = calfAdapters
+            }
+          ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0,
+              ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT ){
+              override fun onMove(
+                  recyclerView: RecyclerView,
+                  viewHolder: RecyclerView.ViewHolder,
+                  target: RecyclerView.ViewHolder
+              ): Boolean {
+                  return false
+              }
+
+              override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                  
+                  val calf = calfAdapters.currentList[viewHolder.adapterPosition]
+                  viewModel.deleteCalfOnSwipe(calf)
+              }
+
+          }).attachToRecyclerView(recyclerView)
+        }
+
+
 
        GlobalScope.launch(Dispatchers.IO){
            calfAdapters.submitList(viewModel.allCalves())

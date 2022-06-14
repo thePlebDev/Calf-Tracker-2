@@ -24,4 +24,7 @@ class CalfViewModel(private val calfDAO: CalfDAO): ViewModel() {
         }
 
     }
+    fun deleteCalfOnSwipe(calf:Calf) = viewModelScope.launch {
+        calfDAO.deleteCalf(calf)
+    }
 }

@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.elliottsoftware.ecalvingtracker.databinding.IndivCalfBinding
 import com.elliottsoftware.ecalvingtracker.models.Calf
 
+/**
+ * @param onItemClicked: we define the function type, (Calf)->Unit, and assign it to onItemClicked*/
 class CalfAdapter(private val onItemClicked:(Calf)->Unit):ListAdapter<Calf,CalfViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalfViewHolder{
@@ -17,6 +19,7 @@ class CalfAdapter(private val onItemClicked:(Calf)->Unit):ListAdapter<Calf,CalfV
                 false
             )
         )
+        //the Java API takes our lambda then compiler converts it to the appropriate functional interface
         viewHolder.itemView.setOnClickListener{
             val position = viewHolder.adapterPosition
             onItemClicked(getItem(position))

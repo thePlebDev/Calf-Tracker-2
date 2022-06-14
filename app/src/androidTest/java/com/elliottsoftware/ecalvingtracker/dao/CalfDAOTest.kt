@@ -57,6 +57,27 @@ class CalfDAOTest : TestDatabaseSetup(){
 
     }
 
+    /**
+     * Testing updateCalf() method on the DAO
+     * */
+    @Test
+    @Throws(Exception::class)
+    fun updateCalfTest() = runBlocking {
+        //GIVEN
+        val TAG_NUMBER:String = "223FFDRE"
+        val calf: Calf = Calf("324dsfa4","another one","333r3", Date(),"Bull")
 
+        //WHEN
+        calfDAO.insertCalf(calf)
+        val foundCalf = calfDAO.getByTagNumber("324dsfa4")
+        val updatedCalf : Calf = foundCalf.copy(tagNumber = TAG_NUMBER)
+        calfDAO.updateCalf(updatedCalf)
+
+        val secondFoundCalf = calfDAO.getByTagNumber(TAG_NUMBER)
+
+        //THEN
+        assertEquals(TAG_NUMBER,secondFoundCalf.tagNumber)
+
+    }
 
 }

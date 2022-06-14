@@ -10,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Entity
+@Parcelize
 data class Calf(
     @ColumnInfo(name="tag_number")
     val tagNumber: String,
@@ -23,7 +24,7 @@ data class Calf(
     val sex:String,
     @PrimaryKey(autoGenerate = true)
     val id: Long =0
-){
+):Parcelable{
 
 
 

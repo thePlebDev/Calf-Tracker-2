@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface CalfDAO {
 
     @Query("SELECT * FROM calf")
-    fun getAllCalves(): List<Calf>
+    fun getAllCalves(): Flow<List<Calf>>
 
     @Query("SELECT * FROM calf WHERE tag_number = :tagNumber")
     suspend fun getByTagNumber(tagNumber: String): Calf

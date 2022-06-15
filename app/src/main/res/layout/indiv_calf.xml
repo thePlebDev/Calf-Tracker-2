@@ -9,7 +9,6 @@
     <com.elliottsoftware.ecalvingtracker.customViews.ExpandOnClickView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fanColor1="#FFEB3B"
         app:childToCollapse="4"
         android:padding="8dp">
         <TextView

@@ -16,13 +16,13 @@ class ExpandOnClickView @JvmOverloads constructor(
     attrs:AttributeSet? = null,
     defStyleAttr: Int =0
 ) : RelativeLayout(context,attrs,defStyleAttr) {
-    //private var childToCollapse: Int = 0
+    private var childToCollapse: Int = 0
 
     init {
         isClickable = true
-//        context.withStyledAttributes(attrs, R.styleable.ExpandOnClickView){
-//            childToCollapse = getInt(R.styleable.ExpandOnClickView_childToCollapse,0)
-//        }
+        context.withStyledAttributes(attrs, R.styleable.ExpandOnClickView){
+            childToCollapse = getInt(R.styleable.ExpandOnClickView_childToCollapse,0)
+        }
     }
 //
 //
@@ -31,10 +31,9 @@ class ExpandOnClickView @JvmOverloads constructor(
 
     override fun performClick(): Boolean {
         if (super.performClick()) return true
-            this.getChildAt(4).isVisible = visibilityCheck(getChildAt(4).isVisible)
-//            this.getChildAt(4).apply {
-//                isVisible = visibilityCheck(isVisible)
-//            }
+            this.getChildAt(4).apply {
+                isVisible = visibilityCheck(isVisible)
+            }
 
         invalidate()
         return true
